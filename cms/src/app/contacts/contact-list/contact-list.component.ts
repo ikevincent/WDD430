@@ -15,7 +15,7 @@ export class ContactListComponent implements OnInit {
       'R. Kent Jackson',
       'jacksonk@byui.edu',
       '208-496-3771',
-      '../../assets/images/jacksonk.jpg',
+      '../../../assets/images/jacksonk.jpg',
       null
     ),
     new Contact(
@@ -23,7 +23,7 @@ export class ContactListComponent implements OnInit {
       'Rex Barzee',
       'barzeer@byui.edu',
       '208-496-3768',
-      '../../assets/images/barzeer.jpg',
+      '../../../assets/images/barzeer.jpg',
       null
     ),
   ];
@@ -32,6 +32,9 @@ export class ContactListComponent implements OnInit {
 
   ngOnInit() {}
 }
+
+const path = '/path/to/directory';
+console.log(path);
 
 // import { Recipe } from '../recipe.model';
 
