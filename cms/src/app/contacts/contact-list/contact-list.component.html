@@ -1,9 +1,9 @@
 <div class="panel panel-default">
+    <a href="#" class="btn btn-success pull-right">New Contact</a>
     <div class="panel-heading">
         <h2 class="panel-title">Contacts</h2>
-        <a href="#" class="btn btn-success pull-right">New Contact</a>
     </div>
-    <div class="panel-body col-xs-12 clearfix" *ngFor="let contact of contacts">
+    <div class="panel-body" *ngFor="let contact of contacts">
         <div class="pull-left">
             <h4 class="list-group-item-heading">{{contact.name}}</h4>
             <p class="list-group-item-text"></p>
