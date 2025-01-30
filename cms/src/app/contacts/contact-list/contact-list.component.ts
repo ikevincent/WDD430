@@ -32,14 +32,3 @@ export class ContactListComponent implements OnInit {
 
   ngOnInit() {}
 }
-
-// import { Recipe } from '../recipe.model';
-
-// export class RecipeListComponent implements OnInit {
-//   recipes: Recipe[] = [
-//     new Recipe(
-//       'Lasagna',
-//       'Lasagna is my favorite meal!',
-//       'https://cookingwithayeh.com/wp-content/uploads/2023/12/Spinach-Lasagna-SQ-12.jpg'
-//     ),
-//   ];
