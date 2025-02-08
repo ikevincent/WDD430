@@ -6,7 +6,7 @@ export const MOCKCONTACTS: Contact[] = [
     name: 'Ike Thompson',
     email: 'ikethompson88@byui.edu',
     phone: '206-920-7545',
-    imageUrl: 'images/barzeer.jpg',
+    imageUrl: 'images/thompsonik.jpeg',
     group: null,
   },
   // index 0
