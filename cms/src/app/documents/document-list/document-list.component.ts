@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Document } from '../document.model';
-import { DocumentService } from '../documents.service';
+import { DocumentService } from '../document.service';
 
 @Component({
   selector: 'cms-document-list',
