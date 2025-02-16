@@ -2,7 +2,7 @@ import { Contact } from './contacts.model';
 
 export const MOCKCONTACTS: Contact[] = [
   {
-    id: '0',
+    id: '5000',
     name: 'Ike Thompson',
     email: 'ikethompson88@byui.edu',
     phone: '206-920-7545',
