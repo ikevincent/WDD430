@@ -7,3 +7,8 @@ body {
   float: left;
   padding: .25rem
 }
+
+a{
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+}
