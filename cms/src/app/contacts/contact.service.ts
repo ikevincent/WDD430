@@ -34,8 +34,17 @@ export class ContactService {
     return this.contacts.slice();
   }
 
+  // getContact(id: string): Contact {
+  //   return this.contacts.find((contact) => contact.id === id) || null;
+  // }
+
   getContact(id: string): Contact {
-    return this.contacts.find((contact) => contact.id === id) || null;
+    for (let contact of this.contacts) {
+      if (contact.id === id) {
+        return contact;
+      }
+    }
+    return null;
   }
 
   addContact(newContact: Contact) {

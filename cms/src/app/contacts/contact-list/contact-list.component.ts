@@ -2,6 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Contact } from '../contacts.model';
 import { ContactService } from '../contact.service';
 import { Subscription } from 'rxjs';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'cms-contact-list',

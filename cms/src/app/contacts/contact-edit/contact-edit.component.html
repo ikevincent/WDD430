@@ -1,33 +1,45 @@
-<!-- <div class="panel panel-default">
+<div class="panel panel-default">
     <div class="panel-body">
-        <form id="contact-edit">
+        <form id="contact-edit" #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" class="form-control required" size="120" max="120">
+                    <input type="text" name="name" [ngModel]="contact?.name" #name="ngModel" id="name"
+                        class="form-control required" size="120" max="120" required>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label for="email">Email:</label>
-                    <input type="text" id="email" class="form-control required" size="120" max="255">
+                    <input type="email" name="email" [ngModel]="contact?.email" #email="ngModel" id="email"
+                        class="form-control required" size="120" max="255" required
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    <div *ngIf="(email.touched) && (email.invalid)" class="alert alert-danger">
+                        Please enter a valid Email Address.
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label for="phone">Phone:</label>
-                    <input type="text" id="phone" class="form-control invalid" size="150" max="255">
-
+                    <input type="phone" name="phone" [ngModel]="contact?.phone" #phone="ngModel" id="phone"
+                        class="form-control invalid" size="150" max="255"
+                        pattern="\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*">
+                    <div *ngIf="(phone.touched) && (phone.invalid)" class="alert alert-danger">
+                        Please enter a valid Phone Number.
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12 form-group">
                     <label for="imageUrl">Image URL:</label>
-                    <input type="text" id="imageUrl" class="form-control" size="150" max="255">
+                    <input type="text" name="imageUrl" [ngModel]="contact?.imageUrl" #imageUrl="ngModel" id="imageUrl"
+                        class="form-control" size="150" max="255">
                 </div>
+
             </div>
 
             <div class="row">
@@ -49,14 +61,19 @@
                 </div>
             </div>
 
+            <div *ngIf="(name.untouched) && (name.invalid) || (email.untouched) && (email.invalid)"
+                class="alert alert-danger">
+                The Name and Email fields are required fields.
+            </div>
+
 
             <div class="row">
                 <div class="col-xs-12 btn-toolbar">
-                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-success" type="submit" [disabled]="!f.valid">Save</button>
                     <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
                 </div>
             </div>
 
         </form>
     </div>
-</div> -->
+</div>
