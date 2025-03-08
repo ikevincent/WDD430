@@ -5,7 +5,8 @@
             <a class="btn btn-primary pull-right" [routerLink]="['/contacts', contact.id, 'edit']">Edit</a>
         </span>
         <div class="d-flex align-items-center">
-            <img [src]="contact.imageUrl" alt="{{ contact.name }}" class="img-thumbnail" width="50" height="50">
+            <img *ngIf="contact.imageUrl" [src]="contact.imageUrl" alt="{{ contact.name }}" class="img-thumbnail"
+                width="50" height="50">
             <h3 class="panel-title ml-3">{{ contact.name }}</h3>
         </div>
 
