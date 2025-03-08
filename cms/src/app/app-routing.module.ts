@@ -29,6 +29,7 @@ const appRoutes: Routes = [
   {
     path: 'contacts',
     component: ContactsComponent,
+    resolve: { contacts: ContactResolver },
     children: [
       { path: 'new', component: ContactEditComponent },
       { path: ':id', component: ContactDetailComponent },
