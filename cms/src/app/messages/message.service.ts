@@ -11,8 +11,7 @@ export class MessageService {
   messageChangedEvent = new Subject<Message[]>();
   contactListChangedEvent = new Subject<Contact[]>();
 
-  private messagesUrl =
-    'https://cms-project-a01bf-default-rtdb.firebaseio.com/messages.json';
+  private messagesUrl = 'http://localhost:3000/messages';
   messages: Message[] = [];
   maxMessageId: number;
 
@@ -35,7 +34,7 @@ export class MessageService {
     this.http
       .get<Message[]>(this.messagesUrl)
       .subscribe((messages: Message[]) => {
-        this.messages = messages;
+        this.messages = messages || [];
         this.maxMessageId = this.getMaxId();
         this.messages.sort((a, b) => {
           if (a < b) return -1;
@@ -67,8 +66,31 @@ export class MessageService {
     return this.messages.find((message) => message.id === id) || null;
   }
 
-  addMessage(message: Message): void {
-    this.messages.push(message);
-    this.storeMessages();
+  // addMessage(message: Message): void {
+  //   this.messages.push(message);
+  //   this.storeMessages();
+  // }
+  addMessage(message: Message) {
+    if (!message) {
+      return;
+    }
+
+    // make sure id of the new Message is empty
+    message.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; newMessage: Message }>(
+        this.messagesUrl,
+        message,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new message to messages
+        this.messages.push(responseData.newMessage);
+        this.messageChangedEvent.next(this.messages.slice());
+      });
   }
 }

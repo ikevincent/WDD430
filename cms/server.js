@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 const cors = require('cors');
 
 // Establish a connection to the MongoDB database
-mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryWrites=true&w=majority&appName=cluster-wdd430/cms')
+mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryWrites=true&w=majority&appName=cluster-wdd430')
 .then(() => {
    console.log('Connected to database!');
 })

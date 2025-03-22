@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -11,11 +10,10 @@ export class DocumentService {
   documentListChangedEvent = new Subject<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
 
-  private documentsUrl =
-    'https://cms-project-a01bf-default-rtdb.firebaseio.com/documents.json';
+  private documentsUrl = 'http://localhost:3000/documents';
 
   documents: Document[] = [];
-  private maxDocumentId: number;
+  maxDocumentId: number;
 
   constructor(private http: HttpClient) {}
 
@@ -24,7 +22,7 @@ export class DocumentService {
 
     for (const document of this.documents) {
       const currentId = +document.id;
-      if (currentId > maxId) {
+      if (!isNaN(currentId) && currentId > maxId) {
         maxId = currentId;
       }
     }
@@ -34,7 +32,7 @@ export class DocumentService {
 
   getDocuments(): Document[] {
     this.http
-      .get<Document[]>(this.documentsUrl)
+      .get<Document[]>(this.documentsUrl, { responseType: 'json' })
       .subscribe((documents: Document[]) => {
         this.documents = documents;
         this.maxDocumentId = this.getMaxId();
@@ -68,41 +66,127 @@ export class DocumentService {
     return this.documents.find((document) => document.id === id);
   }
 
-  addDocument(newDocument: Document) {
-    if (!newDocument) {
+  // addDocument(newDocument: Document) {
+  //   if (!newDocument) {
+  //     return;
+  //   }
+
+  //   this.maxDocumentId++;
+  //   newDocument.id = this.maxDocumentId.toString();
+  //   this.documents.push(newDocument);
+  //   this.storeDocuments();
+  // }
+
+  addDocument(document: Document) {
+    if (!document) {
       return;
     }
 
-    this.maxDocumentId++;
-    newDocument.id = this.maxDocumentId.toString();
-    this.documents.push(newDocument);
-    this.storeDocuments();
+    // make sure id of the new Document is empty
+    document.id = '';
+    document._id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; document: Document }>(
+        'http://localhost:3000/documents',
+        document,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        this.documents.push(responseData.document);
+        this.storeDocuments();
+      });
   }
+
+  // updateDocument(originalDocument: Document, newDocument: Document) {
+  //   if (!originalDocument || !newDocument) {
+  //     return;
+  //   }
+
+  //   const pos = this.documents.indexOf(originalDocument);
+  //   if (pos < 0) {
+  //     return;
+  //   }
+
+  //   newDocument.id = originalDocument.id;
+  //   this.documents[pos] = newDocument;
+  //   this.storeDocuments();
+  // }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
     if (!originalDocument || !newDocument) {
       return;
     }
 
-    const pos = this.documents.indexOf(originalDocument);
+    const pos = this.documents.findIndex((d) => d.id === originalDocument.id);
+
     if (pos < 0) {
       return;
     }
 
+    // set the id of the new Document to the id of the old Document
     newDocument.id = originalDocument.id;
-    this.documents[pos] = newDocument;
-    this.storeDocuments();
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // update database
+    this.http
+      .put(
+        'http://localhost:3000/documents/' + originalDocument.id,
+        newDocument,
+        { headers: headers }
+      )
+      .subscribe((response: Response) => {
+        this.documents[pos] = newDocument;
+        this.documents.sort((a, b) => {
+          if (a < b) return -1;
+          if (a > b) return 1;
+          return 0;
+        });
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
   }
+
+  //   deleteDocument(document: Document) {
+  //     if (!document) {
+  //       return;
+  //     }
+  //     const pos = this.documents.indexOf(document);
+  //     if (pos < 0) {
+  //       return;
+  //     }
+  //     this.documents.splice(pos, 1);
+  //     this.storeDocuments();
+  //   }
+  // }
 
   deleteDocument(document: Document) {
     if (!document) {
       return;
     }
-    const pos = this.documents.indexOf(document);
+
+    const pos = this.documents.findIndex((d) => d.id === document.id);
     if (pos < 0) {
       return;
     }
-    this.documents.splice(pos, 1);
-    this.storeDocuments();
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.documentsUrl}/${document.id}`;
+
+    this.http
+      .delete(url, { headers: headers })
+      .subscribe((response: Response) => {
+        this.documents.splice(pos, 1);
+        this.documents.sort((a, b) => {
+          if (a < b) return -1;
+          if (a > b) return 1;
+          return 0;
+        });
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
   }
 }

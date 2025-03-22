@@ -14,7 +14,7 @@ const appRoutes: Routes = [
   {
     path: 'documents',
     component: DocumentsComponent,
-    resolve: { contacts: ContactResolver },
+    // resolve: { contacts: ContactResolver },
     children: [
       { path: 'new', component: DocumentEditComponent },
       { path: ':id', component: DocumentDetailComponent },
@@ -24,12 +24,12 @@ const appRoutes: Routes = [
   {
     path: 'messages',
     component: MessageListComponent,
-    resolve: { contacts: ContactResolver },
+    // resolve: { contacts: ContactResolver },
   },
   {
     path: 'contacts',
     component: ContactsComponent,
-    resolve: { contacts: ContactResolver },
+    // resolve: { contacts: ContactResolver },
     children: [
       { path: 'new', component: ContactEditComponent },
       { path: ':id', component: ContactDetailComponent },
