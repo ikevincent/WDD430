@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sequenceSchema = new Schema({
+    _id: { typer: Number },
     maxDocumentId: { type: Number, required: true },
     maxMessageId: { type: Number, required: true },
     maxContactId: { type: Number, required: true }

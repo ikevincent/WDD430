@@ -5,17 +5,15 @@ const sequenceGenerator = require('./sequenceGenerator');
 const Document = require('../models/document');
 
 
-// Get all documents
-router.get('/', (req, res, next) => {
-  Document.find({}, (err, documents) => {
-    if (err) {
-      return res.status(500).json({
-        message: 'Error fetching documents',
-        error: err
-      });
-    }
-    return res.status(200).json(documents);
-  });
+// Route to fetch all documents
+router.get('/', async (req, res) => {
+  try {
+    const documents = await Document.find();  // Fetch all documents from the database
+    res.json(documents);  // Send the documents as a response
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    res.status(500).json({ message: 'Error fetching documents' });
+  }
 });
 
  router.post('/', async (req, res, next) => {
