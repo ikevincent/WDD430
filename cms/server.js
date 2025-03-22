@@ -6,10 +6,9 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-const cors = require('cors');
 
 // Establish a connection to the MongoDB database
-mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryWrites=true&w=majority&appName=cluster-wdd430')
+mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryWrites=true&w=majority&appName=cluster-wdd430/cms')
 .then(() => {
    console.log('Connected to database!');
 })
@@ -19,6 +18,8 @@ mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryW
 
 var app = express(); // create an instance of express
 
+app.use(logger('dev')); // Tell express to use the Morgan logger
+
 // Tell express to use the following parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -27,32 +28,36 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 // Add support for CORS
-app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', "*");
+  res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  next();
+});
 
-  // Tell express to use the specified director as the
-// root directory for your web site
-app.use(express.static(path.join(__dirname, '../cms/dist/cms/browser')));
+// Tell express to use the specified director as the root directory for your web site
+app.use(express.static(path.join(__dirname, './dist/cms/browser')));
 
 // Tell express to map all other non-defined routes back to the index page
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../cms/dist/cms/browser/index.html'));
+  res.sendFile(path.join(__dirname, './dist/cms/browser/index.html'));
 });
 
-// Get defining routing files
 // import the routing file to handle the default (index) route
-const index = require('./server/routes/app');
+var index = require('./server/routes/app');
+
+// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
 const messageRoutes = require('./server/routes/messages');
 const contactRoutes = require('./server/routes/contacts');
 const documentRoutes = require('./server/routes/documents');
 
-// ... ADD CODE TO IMPORT YOUR ROUTING FILES HERE ...
-
-app.use(logger('dev')); // Tell express to use the Morgan logger
-
+// Tell express to map the default route ('/') to the index route
 app.use('/', index);
-app.use('/messages', messageRoutes);
-app.use('/contacts', contactRoutes);
-app.use('/documents', documentRoutes);
+
+// ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
+app.use('/api/messages', messageRoutes);
+app.use('/api/contacts', contactRoutes);
+app.use('/api/documents', documentRoutes);
 
 // Define the port address and tell express to use this port
 const port = process.env.PORT || '3000';

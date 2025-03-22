@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Document } from './document.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -10,7 +11,7 @@ export class DocumentService {
   documentListChangedEvent = new Subject<Document[]>();
   documentSelectedEvent = new EventEmitter<Document>();
 
-  private documentsUrl = 'http://localhost:3000/documents';
+  private documentsUrl = 'http://localhost:3000/api/documents';
 
   documents: Document[] = [];
   maxDocumentId: number;
@@ -66,17 +67,6 @@ export class DocumentService {
     return this.documents.find((document) => document.id === id);
   }
 
-  // addDocument(newDocument: Document) {
-  //   if (!newDocument) {
-  //     return;
-  //   }
-
-  //   this.maxDocumentId++;
-  //   newDocument.id = this.maxDocumentId.toString();
-  //   this.documents.push(newDocument);
-  //   this.storeDocuments();
-  // }
-
   addDocument(document: Document) {
     if (!document) {
       return;
@@ -84,14 +74,13 @@ export class DocumentService {
 
     // make sure id of the new Document is empty
     document.id = '';
-    document._id = '';
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     // add to database
     this.http
       .post<{ message: string; document: Document }>(
-        'http://localhost:3000/documents',
+        'http://localhost:3000/api/documents',
         document,
         { headers: headers }
       )
@@ -136,7 +125,7 @@ export class DocumentService {
     // update database
     this.http
       .put(
-        'http://localhost:3000/documents/' + originalDocument.id,
+        'http://localhost:3000/api/documents/' + originalDocument.id,
         newDocument,
         { headers: headers }
       )

@@ -22,7 +22,7 @@ export class MessageEditComponent implements OnInit {
 
   @Output() addMessageEvent = new EventEmitter<Message>();
 
-  currentSender = '5000';
+  currentSender = '101';
 
   constructor(private messageService: MessageService) {}
 

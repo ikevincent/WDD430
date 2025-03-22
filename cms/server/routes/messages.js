@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sequenceGenerator = require('./sequenceGenerator');
-const Message = require('../model/message');
+const Message = require('../models/message');
 
 router.get('/', (req, res, next) => {
     Message.find()

@@ -10,7 +10,7 @@ export class ContactService {
   contactListChangedEvent = new Subject<Contact[]>();
   contactSelectedEvent = new EventEmitter<Contact>();
 
-  private contactsUrl = 'http://localhost:3000/contacts';
+  private contactsUrl = 'http://localhost:3000/api/contacts';
 
   contacts: Contact[] = [];
   maxContactId: number;
@@ -33,7 +33,7 @@ export class ContactService {
     this.http
       .get<Contact[]>(this.contactsUrl)
       .subscribe((contacts: Contact[]) => {
-        this.contacts = Array.isArray(contacts) ? contacts : [];
+        this.contacts = contacts;
         this.maxContactId = this.getMaxId();
         this.contacts.sort((a, b) => {
           if (a < b) return -1;

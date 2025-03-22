@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sequenceGenerator = require('./sequenceGenerator');
-const Contact = require('../model/contact');
+const Contact = require('../models/contact');
 
 router.get('/', (req, res, next) => {
     Contact.find()

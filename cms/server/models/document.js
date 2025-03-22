@@ -5,9 +5,9 @@ const documentSchema = new Schema({
     id: { type: String, required: true },
     name: { type: String, required: true },
     url: { type: String },
-    children: [{ type: Schema.Types.ObjectId, ref: 'Document' }] // Array of child documents
+    children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Document' }] // Array of child documents
 });
 
-const Document = mongoose.model('Document', documentSchema, 'documents');
+const Document = mongoose.model('Document', documentSchema);
 
 module.exports = Document;

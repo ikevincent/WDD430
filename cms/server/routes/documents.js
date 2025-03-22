@@ -1,25 +1,22 @@
-var express = require('express');
-var router = express.Router();
-const sequenceGenerator = require('./sequenceGenerator');
-const Document = require('../model/document');
+const express = require('express');
+const router = express.Router();
 
+const sequenceGenerator = require('./sequenceGenerator');
+const Document = require('../models/document');
+
+
+// Get all documents
 router.get('/', (req, res, next) => {
-   Document.find()
-     .then(documents => {
-       console.log('Fetched documents:', documents); // Log the fetched documents
-       res.status(200).json({
-         message: 'Documents fetched successfully!',
-         documents: documents
-       });
-     })
-     .catch(error => {
-       console.error('Error fetching documents:', error); // Log any errors
-       res.status(500).json({
-         message: 'An error occurred',
-         error: error
-       });
-     });
- });
+  Document.find({}, (err, documents) => {
+    if (err) {
+      return res.status(500).json({
+        message: 'Error fetching documents',
+        error: err
+      });
+    }
+    return res.status(200).json(documents);
+  });
+});
 
  router.post('/', async (req, res, next) => {
     try {

@@ -6,7 +6,7 @@ const contactSchema = new Schema({
    email: { type: String, required: true },
    phone: { type: String, required: true },
    imageUrl: { type: String },
-   group: [{ type: String, ref: 'Contact' }]
+   group: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }]
 });
 
 module.exports = mongoose.model('Contact', contactSchema);

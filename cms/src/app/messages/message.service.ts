@@ -11,7 +11,7 @@ export class MessageService {
   messageChangedEvent = new Subject<Message[]>();
   contactListChangedEvent = new Subject<Contact[]>();
 
-  private messagesUrl = 'http://localhost:3000/messages';
+  private messagesUrl = 'http://localhost:3000/api/messages';
   messages: Message[] = [];
   maxMessageId: number;
 
