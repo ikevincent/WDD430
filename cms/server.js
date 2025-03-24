@@ -6,9 +6,10 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var cors = require('cors');
 
 // Establish a connection to the MongoDB database
-mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/?retryWrites=true&w=majority&appName=cluster-wdd430/cms')
+mongoose.connect('mongodb+srv://ike:ike@cluster-wdd430.cagju.mongodb.net/cms?retryWrites=true&w=majority&appName=cluster-wdd430')
 .then(() => {
    console.log('Connected to database!');
 })
@@ -28,12 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 // Add support for CORS
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', "*");
-  res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
-  res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, PATCH, DELETE, OPTIONS");
-  next();
-});
+app.use(cors());
 
 // Tell express to use the specified director as the root directory for your web site
 app.use(express.static(path.join(__dirname, './dist/cms/browser')));
@@ -55,9 +51,9 @@ const documentRoutes = require('./server/routes/documents');
 app.use('/', index);
 
 // ... ADD YOUR CODE TO MAP YOUR URL'S TO ROUTING FILES HERE ...
-app.use('/api/messages', messageRoutes);
-app.use('/api/contacts', contactRoutes);
-app.use('/api/documents', documentRoutes);
+app.use('/messages', messageRoutes);
+app.use('/contacts', contactRoutes);
+app.use('/api', documentRoutes);
 
 // Define the port address and tell express to use this port
 const port = process.env.PORT || '3000';

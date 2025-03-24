@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Contact } from './contacts.model';
-import { Subject } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class ContactService {
   contactListChangedEvent = new Subject<Contact[]>();
   contactSelectedEvent = new EventEmitter<Contact>();
 
-  private contactsUrl = 'http://localhost:3000/api/contacts';
+  private contactsUrl = 'http://localhost:3000/contacts';
 
   contacts: Contact[] = [];
   maxContactId: number;
@@ -29,21 +29,28 @@ export class ContactService {
 
     return maxId;
   }
-  getContacts(): Contact[] {
-    this.http
-      .get<Contact[]>(this.contactsUrl)
-      .subscribe((contacts: Contact[]) => {
-        this.contacts = contacts;
-        this.maxContactId = this.getMaxId();
-        this.contacts.sort((a, b) => {
-          if (a < b) return -1;
-          if (a > b) return 1;
-          return 0;
-        });
-        this.contactListChangedEvent.next(this.contacts.slice());
-      });
 
-    return this.contacts.slice();
+  getContacts() {
+    this.http
+      .get<{ message: string; contacts: any }>('http://localhost:3000/contacts')
+      .pipe(
+        map((contactData) => {
+          return contactData.contacts.map((contact) => {
+            return {
+              name: contact.name,
+              email: contact.email,
+              phone: contact.phone,
+              imageUrl: contact.imageUrl,
+              group: contact.group,
+              id: contact._id,
+            };
+          });
+        })
+      )
+      .subscribe((transformedContacts) => {
+        this.contacts = transformedContacts;
+        this.contactListChangedEvent.next([...this.contacts]);
+      });
   }
 
   // PUT REQUEST
