@@ -1,0 +1,19 @@
+.bird-detail-container {
+    width: 50%;
+    float: right;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .bird-detail-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .bird-detail-container button {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }

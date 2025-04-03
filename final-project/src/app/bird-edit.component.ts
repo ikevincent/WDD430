@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BirdService } from './bird.service';
 import { Bird } from './bird.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bird-edit',
@@ -17,7 +18,7 @@ export class BirdEditComponent {
     imageUrl: '',
   };
 
-  constructor(private birdService: BirdService) {}
+  constructor(private birdService: BirdService, private router: Router) {}
 
   addBird(): void {
     this.birdService.addBird(this.bird).subscribe(() => {
@@ -30,6 +31,7 @@ export class BirdEditComponent {
         imageUrl: '',
       };
     });
+    this.router.navigate(['/']);
   }
 }
 
