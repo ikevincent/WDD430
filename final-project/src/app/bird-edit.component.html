@@ -1,0 +1,39 @@
+<form (ngSubmit)="addBird()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="bird.name" name="name" required>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" [(ngModel)]="bird.description" name="description" required>
+
+    <label for="dateSeen">Date Seen:</label>
+    <input type="date" id="dateSeen" [(ngModel)]="bird.dateSeen" name="dateSeen" required>
+
+    <label for="locationSeen">Location Seen:</label>
+    <input type="text" id="locationSeen" [(ngModel)]="bird.locationSeen" name="locationSeen" required>
+
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" [(ngModel)]="bird.imageUrl" name="imageUrl" required>
+
+    <button type="submit">Add Bird</button>
+</form>
+<!-- 
+<div *ngIf="bird || !isEditMode">
+    <form [formGroup]="birdForm" (ngSubmit)="isEditMode ? saveBird() : addBird()">
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text" required>
+
+        <label for="description">Description:</label>
+        <input id="description" formControlName="description" type="text" required>
+
+        <label for="dateSeen">Date Seen:</label>
+        <input id="dateSeen" formControlName="dateSeen" type="date" required>
+
+        <label for="locationSeen">Location Seen:</label>
+        <input id="locationSeen" formControlName="locationSeen" type="text" required>
+
+        <label for="imageUrl">Image URL:</label>
+        <input id="imageUrl" formControlName="imageUrl" type="text" required>
+
+        <button type="submit">{{ isEditMode ? 'Save' : 'Add' }}</button>
+    </form>
+</div> -->

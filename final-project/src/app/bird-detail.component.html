@@ -1,0 +1,8 @@
+<div *ngIf="bird">
+    <h2>{{ bird.name }}</h2>
+    <p>{{ bird.description }}</p>
+    <p>{{ bird.locationSeen }}</p>
+    <img [src]="bird.imageUrl" alt="{{ bird.name }}">
+    <button (click)="editBird()">Edit</button>
+    <button (click)="deleteBird()">Delete</button>
+</div>

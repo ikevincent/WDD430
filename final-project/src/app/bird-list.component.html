@@ -1,0 +1,12 @@
+<div class="bird-list-container">
+    <button (click)="navigateToAddBird()">Add Bird</button>
+    <div class="bird-list">
+        <div *ngFor="let bird of birds" (click)="selectBird(bird)">
+            <h3>{{ bird.name }}</h3>
+            <img [src]="bird.imageUrl" alt="{{ bird.name }}">
+        </div>
+    </div>
+    <div class="bird-details" *ngIf="selectedBird">
+        <app-bird-detail [bird]="selectedBird"></app-bird-detail>
+    </div>
+</div>
