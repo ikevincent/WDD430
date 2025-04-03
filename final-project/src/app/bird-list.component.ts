@@ -32,4 +32,17 @@ export class BirdListComponent implements OnInit {
   selectBird(bird: Bird): void {
     this.selectedBird = bird;
   }
+
+  deleteBird(birdId: string): void {
+    this.birdService.deleteBird(birdId).subscribe({
+      next: () => {
+        this.loadBirds(); // Reload the bird list after deletion
+        this.selectedBird = null; // Clear the selected bird
+      },
+      error: (err) => {
+        console.error('Error deleting bird:', err);
+        alert('Failed to delete bird. Please try again.');
+      },
+    });
+  }
 }

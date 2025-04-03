@@ -53,13 +53,18 @@ router.put('/:id', async (req, res) => {
 // Delete a bird
 router.delete('/:id', async (req, res) => {
   try {
-    const bird = await Bird.findById(req.params.id);
-    if (!bird) return res.status(404).json({ message: 'Bird not found' });
+    const birdId = req.params.id;
+    const bird = await Bird.findByIdAndDelete(birdId);
 
-    await bird.remove();
-    res.json({ message: 'Bird deleted' });
+    if (!bird) {
+      console.error(`Bird with ID ${birdId} not found`);
+      return res.status(404).json({ message: 'Bird not found' });
+    }
+
+    res.json({ message: 'Bird deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(`Error deleting bird with ID ${birdId}:`, err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
