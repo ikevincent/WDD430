@@ -8,8 +8,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/birds', pathMatch: 'full' },
   { path: 'birds', component: BirdListComponent },
   { path: 'bird-details/:id', component: BirdDetailComponent },
-  { path: 'edit-bird/:id', component: BirdEditComponent },
-  { path: 'add-bird', component: BirdEditComponent },
+  { path: 'edit-bird/:id', component: BirdEditComponent }, // Ensure this is a direct route
+  { path: 'add-bird', component: BirdEditComponent }, // Ensure add bird is also direct
 ];
 
 @NgModule({

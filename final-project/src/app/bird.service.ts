@@ -15,16 +15,16 @@ export class BirdService {
     return this.http.get<Bird[]>(this.apiUrl);
   }
 
-  getBird(birdId: string): Observable<Bird> {
-    return this.http.get<Bird>(`${this.apiUrl}/${birdId}`);
+  getBirdById(id: string) {
+    return this.http.get<Bird>(`/api/birds/${id}`);
   }
 
   addBird(bird: Bird): Observable<Bird> {
     return this.http.post<Bird>(this.apiUrl, bird);
   }
 
-  updateBird(bird): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${bird.id}`, bird);
+  updateBird(id: string, bird: Bird) {
+    return this.http.put(`/api/birds/${id}`, bird);
   }
 
   deleteBird(birdId: String): Observable<any> {

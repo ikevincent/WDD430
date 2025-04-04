@@ -72,6 +72,9 @@
             },
             "development": {
               "buildTarget": "final-project:build:development"
+            },
+            "options": {
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

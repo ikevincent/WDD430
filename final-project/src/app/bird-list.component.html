@@ -1,5 +1,5 @@
 <div class="bird-list-container">
-    <button (click)="navigateToAddBird()">Add Bird</button>
+    <button [routerLink]="['/add-bird']">Add Bird</button>
     <div class="bird-list">
         <div *ngFor="let bird of birds" (click)="selectBird(bird)">
             <h3>{{ bird.name }}</h3>

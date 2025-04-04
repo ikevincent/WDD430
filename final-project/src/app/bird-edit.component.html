@@ -1,4 +1,4 @@
-<form (ngSubmit)="addBird()">
+<form (ngSubmit)="onSubmit()">
     <label for="name">Name:</label>
     <input type="text" id="name" [(ngModel)]="bird.name" name="name" required>
 
@@ -14,7 +14,7 @@
     <label for="imageUrl">Image URL:</label>
     <input type="text" id="imageUrl" [(ngModel)]="bird.imageUrl" name="imageUrl" required>
 
-    <button type="submit">Add Bird</button>
+    <button type="submit">{{ isEditMode ? 'Update Bird' : 'Add Bird' }}</button>
 </form>
 <!-- 
 <div *ngIf="bird || !isEditMode">
