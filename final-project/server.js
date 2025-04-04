@@ -6,7 +6,6 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-//Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -20,12 +19,6 @@ mongoose.connect(dbURI)
   .then(() => console.log('MongoDB connected!'))
   .catch(err => console.log(err));
 
-// Define a simple route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

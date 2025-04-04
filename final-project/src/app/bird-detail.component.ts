@@ -36,15 +36,4 @@ export class BirdDetailComponent {
       console.error('Bird ID is undefined');
     }
   }
-
-  // deleteBird(): void {
-  //   if (this.bird && this.bird._id) {
-  //     this.birdService.deleteBird(this.bird._id).subscribe(() => {
-  //       // Handle successful deletion, e.g., navigate back to the bird list
-  //       this.router.navigate(['/birds']);
-  //     });
-  //   } else {
-  //     console.error('Bird ID is undefined');
-  //   }
-  // }
 }

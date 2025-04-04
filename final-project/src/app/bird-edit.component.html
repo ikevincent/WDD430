@@ -16,24 +16,3 @@
 
     <button type="submit">{{ isEditMode ? 'Update Bird' : 'Add Bird' }}</button>
 </form>
-<!-- 
-<div *ngIf="bird || !isEditMode">
-    <form [formGroup]="birdForm" (ngSubmit)="isEditMode ? saveBird() : addBird()">
-        <label for="name">Name:</label>
-        <input id="name" formControlName="name" type="text" required>
-
-        <label for="description">Description:</label>
-        <input id="description" formControlName="description" type="text" required>
-
-        <label for="dateSeen">Date Seen:</label>
-        <input id="dateSeen" formControlName="dateSeen" type="date" required>
-
-        <label for="locationSeen">Location Seen:</label>
-        <input id="locationSeen" formControlName="locationSeen" type="text" required>
-
-        <label for="imageUrl">Image URL:</label>
-        <input id="imageUrl" formControlName="imageUrl" type="text" required>
-
-        <button type="submit">{{ isEditMode ? 'Save' : 'Add' }}</button>
-    </form>
-</div> -->
